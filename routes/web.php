@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Front\HomepageController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,6 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [HomepageController::class,'index']);
+Route::get('/category/{category}', [HomepageController::class,'category'])->name('category');
+Route::get('/{category}/{slug}', [HomepageController::class,'getOneArticle'])->name('get.article');
