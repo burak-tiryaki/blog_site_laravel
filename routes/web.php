@@ -16,3 +16,7 @@ use App\Http\Controllers\Front\HomepageController;
 Route::get('/', [HomepageController::class,'index']);
 Route::get('/category/{category}', [HomepageController::class,'category'])->name('category');
 Route::get('/{category}/{slug}', [HomepageController::class,'getOneArticle'])->name('get.article');
+//Sabit URL'ler altta olduğu gibi değişken olanlardan önce tanımlanmalıdır. Sıra önemli.
+Route::get('/contact',[HomepageController::class,'getContact'])->name('contact');
+Route::post('/contact',[HomepageController::class,'postContact'])->name('contact.post');
+Route::get('/{page}',[HomepageController::class,'page'])->name('page');

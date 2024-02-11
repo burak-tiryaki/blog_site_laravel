@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Page;
 use Illuminate\Database\Seeder;
 use Illuminate\Foundation\Providers\ArtisanServiceProvider;
 
@@ -21,7 +23,8 @@ class DatabaseSeeder extends Seeder
         // ]);
         $this->call([
             CategorySeeder::class,
-            ArticleSeeder::class
+            ArticleSeeder::class,
+            PageSeeder::class
         ]);
     }
     
