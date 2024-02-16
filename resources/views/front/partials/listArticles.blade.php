@@ -11,7 +11,7 @@
 
             <a href="{{Route('get.article',[$article->getCategory->category_slug,$article->article_slug])}}">
                 <h2 class="post-title">{{$article->article_title}}</h2>
-                <h3 class="post-subtitle">{!! Str::words($article->article_content, 14) !!}</h3>
+                <h3 class="post-subtitle">{!! Str::limit($article->article_content, 100) !!}</h3>
             </a>
             <p class="post-meta">
                 

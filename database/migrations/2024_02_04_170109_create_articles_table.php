@@ -18,7 +18,8 @@ return new class extends Migration
             $table->text('article_content');
             $table->string('article_slug');
             $table->integer('article_hit')->default(0);
-            $table->string('article_image');
+            $table->integer('article_status')->default(0)->comment('0-inactive 1-active');
+            $table->string('article_image')->default('/front/assets/img/home-bg.jpg');
             $table->timestamps();
 
             $table->foreign('category_id')

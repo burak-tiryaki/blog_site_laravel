@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\Back\ArticleController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Front\HomepageController;
 use App\Http\Controllers\Back\DashboardController;
 use App\Http\Controllers\Back\AuthController;
+use Monolog\Handler\RotatingFileHandler;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +21,8 @@ Route::prefix('admin')->name('admin.')->group(function(){
 
     Route::middleware('isAdmin')->group(function(){
         Route::get('panel',[DashboardController::class,'index'])->name('dashboard');
+        Route::get('articles/{article}/changeStatus', [ArticleController::class, 'changeStatus'])->name('articles.changeStatus');
+        Route::resource('articles',ArticleController::class);
         Route::get('logout',[AuthController::class,'logout'])->name('logout');
     });
 });

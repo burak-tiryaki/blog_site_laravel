@@ -13,11 +13,33 @@ class ArticleSeeder extends Seeder
      */
     public function run(): void
     {
+        $lorem = '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque
+         venenatis at mi at bibendum. Integer congue odio mi, sed porta nibh ornare id. 
+         Aenean enim odio, vehicula sit amet accumsan eget, hendrerit sed tortor. 
+         In semper quam sed diam blandit, eget suscipit nibh lobortis. Cras tincidunt 
+         nisl eget viverra laoreet. Ut porttitor mauris eget porta cursus. Nunc volutpat 
+         tincidunt fringilla.</p>
+         <p>Phasellus fringilla sollicitudin erat, vitae finibus ipsum ullamcorper eget. 
+         Vivamus imperdiet rhoncus imperdiet. Cras euismod magna ac velit varius, in hendrerit
+         turpis hendrerit. Nunc justo purus, convallis ac lacinia ac, vehicula ac metus. In 
+         semper feugiat diam a sodales. Donec semper fermentum feugiat. Praesent nec libero 
+         tempor, mattis felis id, maximus metus. Aliquam varius orci sed arcu consectetur 
+         ultrices. Sed non varius nisi, sed ornare nisl. Nunc accumsan velit eu convallis 
+         ultrices. Sed vestibulum posuere ipsum, nec condimentum nulla aliquet molestie. 
+         Vestibulum pharetra urna ut molestie laoreet. Donec viverra vestibulum odio, vel 
+         varius est suscipit id.</p>
+         <p>Ut tempus neque mi, eget molestie libero consequat ac. Integer blandit justo nec
+         lacus varius, et pulvinar mi gravida. Vivamus non sodales quam. Aenean non risus 
+         quis sem commodo ultricies in eu libero. Donec imperdiet imperdiet tincidunt. Mauris
+          id consectetur ligula. Pellentesque habitant morbi tristique senectus et netus et 
+          malesuada fames ac turpis egestas.</p>
+        ';
+
         $datas = [
             [
                 'category_id' =>2,
                 'article_title'=>'Merhaba Dünya',
-                'article_content' => $this->loremIpsum(),
+                'article_content' => $lorem,
                 'article_slug' => $this->slugify('Merhaba Dünya'),
                 'article_image' => 'https://picsum.photos/id/237/1920/1080',
                 'created_at' => now()
@@ -25,7 +47,7 @@ class ArticleSeeder extends Seeder
             [
                 'category_id' =>4,
                 'article_title'=>'Ford Yeni Araba',
-                'article_content' => $this->loremIpsum(),
+                'article_content' => $lorem,
                 'article_slug' => $this->slugify('Ford Yeni Araba'),
                 'article_image' => 'https://picsum.photos/id/238/1920/1080',
                 'created_at' => date("2024-02-04 12:30:00")
@@ -33,7 +55,7 @@ class ArticleSeeder extends Seeder
             [
                 'category_id' =>6,
                 'article_title'=>'Yoga Nasıl Yapılır?',
-                'article_content' => $this->loremIpsum(),
+                'article_content' => $lorem,
                 'article_slug' => $this->slugify('Yoga Nasıl Yapılır?'),
                 'article_image' => 'https://picsum.photos/id/239/1920/1080',
                 'created_at' => date("2024-02-04 16:30:00")

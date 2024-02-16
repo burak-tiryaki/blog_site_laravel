@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Admin;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -22,6 +23,7 @@ class AuthController extends Controller
         ]);
 
         if (Auth::attempt(['admin_email' => $request->email, 'password' => $request->password])) {
+            toastr('Welcome back '. Str::upper(Auth::user()->admin_name,'info'));
             return redirect()->route('admin.dashboard');
         }
         else
