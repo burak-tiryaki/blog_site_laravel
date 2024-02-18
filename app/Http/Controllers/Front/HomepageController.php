@@ -20,20 +20,25 @@ class HomepageController extends Controller
         view()->share('pages',Page::orderBy('page_order','ASC')->get());
         
         // for sidebar category list
-        view()->share('categories', Category::all());
+        view()->share('categories', Category::where('category_status',1)->get());
     }
 
     public function index()
     {
-        $viewData['articles'] = Article::OrderBy('created_at','DESC')->paginate(2);
+        $viewData['articles'] = Article::where('article_status',1)
+                                        ->whereHas('getCategory', function ($query) {
+                                            $query->where('category_status', 1);
+                                        })
+                                        ->OrderBy('created_at','DESC')
+                                        ->paginate(2);
         
         return view('front.mainpage',$viewData);
     }
 
     public function getOneArticle($categorySlug,$slug)
     {
-        $category = Category::where('category_slug',$categorySlug)->first() ?? abort(403,'Category Yok');
-        $article = Article::where(['article_slug' =>$slug, 'category_id'=>$category->category_id])->first() ?? abort(403,'Article Yok');
+        $category = Category::where(['category_slug'=>$categorySlug,'category_status'=>1])->first() ?? abort(403,'Category Yok');
+        $article = Article::where(['article_slug' =>$slug, 'category_id'=>$category->category_id, 'article_status'=>1])->first() ?? abort(403,'Article Yok');
         //$article->update(['article_hit' => $article->article_hit + 1]);
         $viewData['article'] = $article;
         
@@ -42,8 +47,11 @@ class HomepageController extends Controller
 
     public function category($slug)
     {
-        $category = Category::where('category_slug',$slug)->first() ?? abort(403,'Category Yok');
-        $viewData['articles'] = Article::where(['category_id'=>$category->category_id])->orderBy('created_at','DESC')->paginate(2) ?? abort(403,'Article Yok');
+        $category = Category::where(['category_slug'=>$slug,'category_status'=>1])->first() ?? abort(403,'Category Yok');
+        
+        $viewData['articles'] = Article::where(['category_id'=>$category->category_id, 'article_status'=>1])
+                                ->orderBy('created_at','DESC')
+                                ->paginate(2) ?? abort(403,'Article Yok');
         $viewData['category'] = $category;
         
         return view('front.category',$viewData);

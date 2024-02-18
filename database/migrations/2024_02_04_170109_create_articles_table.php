@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('article_hit')->default(0);
             $table->integer('article_status')->default(0)->comment('0-inactive 1-active');
             $table->string('article_image')->default('/front/assets/img/home-bg.jpg');
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('category_id')

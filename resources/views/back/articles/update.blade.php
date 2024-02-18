@@ -14,9 +14,17 @@
 @endif
 
 <div class="card">
-    <div class="card-header">
-        <i class="fas fa-edit me-1"></i>
-        Update Article
+    <div class="card-header d-flex align-items-center">
+        <span>
+            <i class="fas fa-edit me-1"></i>
+            Update Article
+        </span>
+        <span class="ms-auto">
+            <a href="{{route('admin.articles.index')}}" class="btn btn-outline-primary">
+                <i class="fa fa-eye"></i>
+                All Articles
+            </a>
+        </span>
     </div>
     <div class="card-body">
         <form action="{{route('admin.articles.update',$article->article_id)}}" method="POST" enctype="multipart/form-data">

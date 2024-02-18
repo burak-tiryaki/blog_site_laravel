@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Front\HomepageController;
 use App\Http\Controllers\Back\DashboardController;
 use App\Http\Controllers\Back\AuthController;
+use App\Http\Controllers\Back\CategoryController;
+use App\Models\Category;
 use Monolog\Handler\RotatingFileHandler;
 
 /*
@@ -21,8 +23,23 @@ Route::prefix('admin')->name('admin.')->group(function(){
 
     Route::middleware('isAdmin')->group(function(){
         Route::get('panel',[DashboardController::class,'index'])->name('dashboard');
+
+        //------- Articles Routes -------
         Route::get('articles/{article}/changeStatus', [ArticleController::class, 'changeStatus'])->name('articles.changeStatus');
+        Route::get('articles/{article}/trashArticle', [ArticleController::class, 'trashArticle'])->name('articles.trashArticle');
+        Route::get('articles/getTrashedArticles', [ArticleController::class, 'getTrashedArticles'])->name('articles.getTrashedArticles');
+        Route::get('articles/{article}/recoverArticle', [ArticleController::class, 'recoverArticle'])->name('articles.recoverArticle');
+        Route::get('articles/{article}/hardDeleteArticle', [ArticleController::class, 'hardDeleteArticle'])->name('articles.hardDeleteArticle');
         Route::resource('articles',ArticleController::class);
+
+        //------- Category Routes -------
+        Route::get('categories',[CategoryController::class, 'index'])->name('category.index');
+        Route::get('category/{category}/changeStatus', [CategoryController::class, 'changeStatus'])->name('category.changeStatus');
+        Route::post('category/createCategory', [CategoryController::class, 'createCategory'])->name('category.createCategory');
+        Route::get('category/getData', [CategoryController::class, 'getData'])->name('category.getData');
+        Route::post('category/updateCategory', [CategoryController::class, 'updateCategory'])->name('category.updateCategory');
+        Route::post('category/deleteCategory', [CategoryController::class, 'deleteCategory'])->name('category.deleteCategory');
+
         Route::get('logout',[AuthController::class,'logout'])->name('logout');
     });
 });

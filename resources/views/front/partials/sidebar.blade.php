@@ -12,7 +12,7 @@
                     <a href="{{route('category',$cat->category_slug)}}"
                         class="{{Request::segment(2) == $cat->category_slug ? 'bg-primary d-flex rounded p-1 text-white me-1' :''}}  "
                         >{{$cat->category_name}}</a>
-                    <span class="badge bg-primary rounded-pill">{{$cat->getArticleCount()}}</span>
+                    <span class="badge bg-primary rounded-pill">{{$cat->getArticleCount(['article_status' => 1])}}</span>
                 </li>
             @endforeach
                 

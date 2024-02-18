@@ -149,8 +149,49 @@ class ArticleController extends Controller
         return redirect(route('admin.articles.index'));
     }
 
+    public function trashArticle($id)
+    {
+        Article::where('article_id',$id)->delete();
+        
+        toastr('Article successfuly TRASHED.','success','Success!');
+
+        return redirect(route('admin.articles.index'));
+    }
+    
+    public function getTrashedArticles()
+    {
+        $articles = Article::onlyTrashed()->orderBy('deleted_at','DESC')->get();
+        return view('back.articles.trashed',compact('articles'));
+    }
+
+    public function recoverArticle($id)
+    {
+        $article = Article::onlyTrashed()->where('article_id',$id)->restore();
+        
+        toastr('Article successfuly RECOVERED.','success','Success!');
+
+        return redirect(route('admin.articles.getTrashedArticles'));
+    }
+
+    public function hardDeleteArticle($id)
+    {
+        $article = Article::onlyTrashed()->where('article_id',$id)->first();
+        
+        if (File::exists(public_path($article->article_image)) && $article->article_image != '/front/assets/img/home-bg.jpg') 
+        {
+            // Eski dosyayı sil
+            unlink(public_path($article->article_image));
+        }
+        
+        $article->where('article_id',$id)->forceDelete();
+        toastr('Article successfuly DELETED.','success','Success!');
+
+        return redirect(route('admin.articles.index'));
+    }
+    
     /**
      * Remove the specified resource from storage.
+     * This method can be use with forms.
      */
     public function destroy(string $id)
     {

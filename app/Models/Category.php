@@ -9,9 +9,12 @@ class Category extends Model
 {
     use HasFactory;
     protected $table = 'categories';
-
-    public function getArticleCount()
+    protected $fillable = ['category_name','category_slug','category_status'];
+    
+    public function getArticleCount($where=array())
     {
-        return $this->hasMany('App\Models\Article','category_id','category_id')->count();
+        return $this->hasMany('App\Models\Article','category_id','category_id')
+                    ->where($where)
+                    ->count();
     }
 }

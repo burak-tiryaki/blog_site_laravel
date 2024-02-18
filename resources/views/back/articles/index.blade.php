@@ -13,9 +13,17 @@
 @endif
 
 <div class="card mb-4">
-    <div class="card-header">
-        <i class="fas fa-table-list me-1"></i>
-        Articles (<strong>{{$articles->count()}}</strong>)
+    <div class="card-header d-flex align-items-center">
+        <span>
+            <i class="fas fa-table-list me-1"></i>
+            Articles (<strong>{{$articles->count()}}</strong>)
+        </span>
+        <span class="ms-auto">
+            <a href="{{route('admin.articles.getTrashedArticles')}}" class="btn btn-outline-secondary">
+                <i class="fa fa-trash"></i>
+                Trashed Articles
+            </a>
+        </span>
     </div>
     <div class="card-body">
         <table id="datatablesSimple">
@@ -56,7 +64,8 @@
                     <td>{{$article->created_at}}</td>
                     <td>
                         <a href="{{route('admin.articles.changeStatus',$article->article_id)}}" 
-                            class="btn btn-sm {!!$article->article_status == 1 ? 'btn-success">Active' : 'btn-danger">Passive'!!}
+                            class="btn btn-sm {!!$article->article_status == 1 ? 'btn-success' : 'btn-danger'!!}">
+                            {!!$article->article_status == 1 ? 'Active' : 'Passive'!!}
                         </a>
 
                     </td>
@@ -74,9 +83,9 @@
                         </label> 
                     </td> --}}
                     <td>
-                        <a href="#" title="Show" class="btn btn-sm btn-success"><i class="fa fa-eye px-1"></i></a>
+                        <a href="{{route('get.article',[$article->getCategory->category_name,$article->article_slug])}}" target="_blank" title="Show" class="btn btn-sm btn-success"><i class="fa fa-eye px-1"></i></a>
                         <a href="{{route('admin.articles.edit',$article->article_id)}}" title="Edit" class="btn btn-sm btn-primary"><i class="fa fa-pen px-1"></i></a>
-                        <a href="#" title="Delete" class="btn btn-sm btn-danger"><i class="fa fa-times px-1"></i></a>
+                        <a href="{{route('admin.articles.trashArticle',$article->article_id)}}" title="Delete" class="btn btn-sm btn-danger"><i class="fa fa-trash px-1"></i></a>
                     </td>
                 </tr>
                 @endforeach
