@@ -18,7 +18,7 @@ class PageSeeder extends Seeder
         foreach($pages as $page){
             Page::create([
                 'page_title' => $page,
-                'page_image' => '',
+                'page_image' => '/front/assets/img/about-bg.jpg',
                 'page_content' => $page. ' Page. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quas optio, tenetur ex velit eius harum vitae architecto, sapiente repellat accusamus reprehenderit excepturi inventore itaque dignissimos. Nam sint enim numquam molestiae.',
                 'page_slug' => $this->slugify($page),
                 'page_order' => ++$count

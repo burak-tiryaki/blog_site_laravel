@@ -17,7 +17,7 @@ class HomepageController extends Controller
     {
         //--- view'lerde GLOBAL DEĞİŞKEN TANIMLAMA
         // Menu Pages
-        view()->share('pages',Page::orderBy('page_order','ASC')->get());
+        view()->share('pages',Page::where('page_status',1)->orderBy('page_order','ASC')->get());
         
         // for sidebar category list
         view()->share('categories', Category::where('category_status',1)->get());
@@ -59,7 +59,7 @@ class HomepageController extends Controller
 
     public function page($slug)
     {
-        $page = Page::where('page_slug',$slug)->first() ?? abort(403,'Missing Page');
+        $page = Page::where(['page_slug'=>$slug, 'page_status'=>1])->first() ?? abort(403,'Missing Page');
         $viewData['page'] = $page;
 
         return view('front.page',$viewData);

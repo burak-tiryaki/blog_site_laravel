@@ -6,6 +6,7 @@ use App\Http\Controllers\Front\HomepageController;
 use App\Http\Controllers\Back\DashboardController;
 use App\Http\Controllers\Back\AuthController;
 use App\Http\Controllers\Back\CategoryController;
+use App\Http\Controllers\Back\PageController;
 use App\Models\Category;
 use Monolog\Handler\RotatingFileHandler;
 
@@ -39,6 +40,11 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::get('category/getData', [CategoryController::class, 'getData'])->name('category.getData');
         Route::post('category/updateCategory', [CategoryController::class, 'updateCategory'])->name('category.updateCategory');
         Route::post('category/deleteCategory', [CategoryController::class, 'deleteCategory'])->name('category.deleteCategory');
+
+        //------- Page Routes -------
+        Route::resource('pages', PageController::class);
+        Route::get('pages/{page}/changeStatus', [PageController::class, 'changeStatus'])->name('pages.changeStatus');
+        Route::post('pages/deletePage', [PageController::class, 'deletePage'])->name('pages.deletePage');
 
         Route::get('logout',[AuthController::class,'logout'])->name('logout');
     });

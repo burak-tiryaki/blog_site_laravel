@@ -14,10 +14,11 @@ return new class extends Migration
         Schema::create('pages', function (Blueprint $table) {
             $table->id('page_id');
             $table->string('page_title');
-            $table->string('page_image');
+            $table->string('page_image')->default('/front/assets/img/about-bg.jpg');
             $table->longText('page_content');
             $table->string('page_slug');
-            $table->unsignedInteger('page_order');
+            $table->unsignedInteger('page_order')->unique();
+            $table->unsignedInteger('page_status')->default(1);
             $table->timestamps();
         });
     }

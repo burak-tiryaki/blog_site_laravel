@@ -3,11 +3,14 @@
         <div class="sb-sidenav-menu">
             <div class="nav">
                 <div class="sb-sidenav-menu-heading">Core</div>
+
                 <a class="nav-link {{ Request::segment(2)=='panel' ? 'active' : ''}}" href="{{route('admin.dashboard')}}">
                     <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                     Dashboard
                 </a>
+
                 <div class="sb-sidenav-menu-heading">Content Managment</div>
+                <!----- Articles ------->
                 <a class="nav-link {{ Request::segment(2)=='articles' ? 'in' : 'collapsed'}}" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                     <div class="sb-nav-link-icon"><i class="fas fa-edit"></i></div>
                     Articles
@@ -19,10 +22,24 @@
                         <a class="nav-link {{ Request::segment(2)=='articles' && Request::segment(3)=='create' ? 'active' : ''}}" href="{{route('admin.articles.create')}}">Create Article</a>
                     </nav>
                 </div>
+                <!----- Categories ------->
                 <a class="nav-link {{ Request::segment(2)=='categories' ? 'active' : ''}}" href="{{route('admin.category.index')}}">
                     <div class="sb-nav-link-icon"><i class="fas fa-list"></i></div>
                     Categories
                 </a>
+                
+                <!----- Pages ------->
+                <a class="nav-link {{ Request::segment(2)=='pages' ? 'in' : 'collapsed'}}" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapseLayouts">
+                    <div class="sb-nav-link-icon"><i class="fa-regular fa-file-lines"></i></div>
+                    Pages
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse {{ Request::segment(2)=='pages' ? 'show' : ''}}" id="collapsePages" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                    <nav class="sb-sidenav-menu-nested nav">
+                        <a class="nav-link {{ Request::segment(2)=='pages' && !Request::segment(3) ? 'active' : ''}}" href="{{route('admin.pages.index')}}">All Pages</a>
+                        <a class="nav-link {{ Request::segment(2)=='pages' && Request::segment(3)=='create' ? 'active' : ''}}" href="{{route('admin.pages.create')}}">Create Page</a>
+                    </nav>
+                </div>
                 {{-- Theme examples --}}
                     {{-- <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
                         <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
