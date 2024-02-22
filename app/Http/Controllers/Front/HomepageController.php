@@ -8,8 +8,8 @@ use App\Models\Category;
 use App\Models\Page;
 use App\Models\Contact;
 use Illuminate\Http\Request;
-use Illuminate\Mail\Mailables\Content;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class HomepageController extends Controller
 {
@@ -41,8 +41,11 @@ class HomepageController extends Controller
     public function getOneArticle($categorySlug,$slug)
     {
         $category = Category::where(['category_slug'=>$categorySlug,'category_status'=>1])->first() ?? abort(403,'Category Yok');
-        $article = Article::where(['article_slug' =>$slug, 'category_id'=>$category->category_id, 'article_status'=>1])->first() ?? abort(403,'Article Yok');
-        //$article->update(['article_hit' => $article->article_hit + 1]);
+        
+        $article = Article::where(['article_slug' =>$slug, 'category_id'=>$category->category_id, 'article_status'=>1])
+                            ->first() ?? abort(403,'Article Yok');
+        
+        $article->where('article_id',$article->article_id)->update(['article_hit' => $article->article_hit + 1]);
         $viewData['article'] = $article;
         
         return view('front.getArticle',$viewData);
@@ -75,16 +78,8 @@ class HomepageController extends Controller
 
     public function postContact(Request $request)
     {
-        // $rules = [
-        //     "name" => 'required',
-        //     "email" => 'required|email',
-        //     'subject' => 'required',
-        //     'message' => 'required'
-        // ];
-        // $validate = Validator::make($request->post(),$rules);
-        // if($validate->fails()){
-        //     return redirect('contact')->withErrors($validate)->withInput();
-        // }
+        $fromAddress = config('mail.from.address');
+        $fromName = config('app.custom_site_title');
 
         $request->validate([
             "name" => 'required',
@@ -99,6 +94,19 @@ class HomepageController extends Controller
         $contact->subject = $request->subject;
         $contact->message = $request->message;
         $contact->save();
+
+        Mail::send([],[],function($msg) use ($request,$fromAddress,$fromName){
+            $msg->from($fromAddress,$fromName)
+                ->to($request->email)
+                ->subject('Your '.$request->subject.' message reached us!')
+                ->html('Dear '.Str::title($request->name). ', <br><br>'
+                        .'Your message:<br><br> "'.$request->message.'"<br><br>'.
+                        'Successfuly reached us! <br><br>'.
+                        'We will return as soon as possible.<br><br>'.
+                        '<small>'.now().'</small>');
+        });
+        // To check sended fake messages https://mailtrap.io/inboxes
+
         return redirect()->route('contact')->with('status','Your message successfuly sended.');
     }
 }

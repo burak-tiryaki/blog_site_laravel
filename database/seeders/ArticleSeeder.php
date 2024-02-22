@@ -42,6 +42,7 @@ class ArticleSeeder extends Seeder
                 'article_content' => $lorem,
                 'article_slug' => $this->slugify('Merhaba Dünya'),
                 'article_image' => 'https://picsum.photos/id/237/1920/1080',
+                'article_status' => 1,
                 'created_at' => now()
             ],
             [
@@ -50,6 +51,7 @@ class ArticleSeeder extends Seeder
                 'article_content' => $lorem,
                 'article_slug' => $this->slugify('Ford Yeni Araba'),
                 'article_image' => 'https://picsum.photos/id/238/1920/1080',
+                'article_status' => 1,
                 'created_at' => date("2024-02-04 12:30:00")
             ],
             [
@@ -58,6 +60,7 @@ class ArticleSeeder extends Seeder
                 'article_content' => $lorem,
                 'article_slug' => $this->slugify('Yoga Nasıl Yapılır?'),
                 'article_image' => 'https://picsum.photos/id/239/1920/1080',
+                'article_status' => 1,
                 'created_at' => date("2024-02-04 16:30:00")
             ],
         ];
