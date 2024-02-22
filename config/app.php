@@ -7,6 +7,24 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Custom variables by Burak
+    |--------------------------------------------------------------------------
+    |
+    | For custom site settings
+    |
+    */
+
+    'custom_site_title' => env('CUSTOM_SITE_TITLE','site title'),
+    'custom_site_logo' => env('CUSTOM_SITE_LOGO','dunnya'),
+    'custom_site_favicon' => env('CUSTOM_SITE_FAVICON','public/favicon.ico'),
+    'custom_site_active' => env('CUSTOM_SITE_ACTIVE','1'), 
+    'custom_site_twitter_url' => env('CUSTOM_SITE_TWITTER_URL','https://twitter.com/exampleuserid'),
+    'custom_site_instagram_url' => env('CUSTOM_SITE_INSTAGRAM_URL','https://www.instagram.com/exampleuserid/'),
+    'custom_site_github_url' => env('CUSTOM_SITE_GITHUB_URL','https://github.com/exampleuserid'),
+    'custom_site_linkedin_url' => env('CUSTOM_SITE_LINKEDIN_URL','https://www.linkedin.com/in/exampleuserid/'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Name
     |--------------------------------------------------------------------------
     |

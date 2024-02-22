@@ -17,6 +17,7 @@
         <span>
             <i class="fas fa-table-list me-1"></i>
             Pages (<strong>{{$pages->count()}}</strong>)
+            {{ empty(config('app.custom_site_logo')) ?'bu silah boş':'' }}
         </span>
         <span class="ms-auto">
             {{-- <a href="#" class="btn btn-outline-secondary">

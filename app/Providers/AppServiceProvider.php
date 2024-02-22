@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
+use PSpell\Config;
+use stdClass;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -21,5 +23,12 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Paginator::useBootstrapFive();
+
+        $GlobalViewData = new stdClass();
+        $GlobalViewData->siteTitle = empty(config('app.custom_site_title')) ? '': config('app.custom_site_title');
+        $GlobalViewData->siteLogo = empty(config('app.custom_site_logo')) ? '': config('app.custom_site_logo');
+        $GlobalViewData->isActive = config('app.custom_site_active');
+        
+       view()->share('config',$GlobalViewData);
     }
 }

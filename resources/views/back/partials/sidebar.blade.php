@@ -40,6 +40,14 @@
                         <a class="nav-link {{ Request::segment(2)=='pages' && Request::segment(3)=='create' ? 'active' : ''}}" href="{{route('admin.pages.create')}}">Create Page</a>
                     </nav>
                 </div>
+
+                <!----- SETTINGS ------->
+                <div class="sb-sidenav-menu-heading">Settings</div>
+
+                <a class="nav-link {{ Request::segment(2)=='config' ? 'active' : ''}}" href="{{route('admin.config.index')}}">
+                    <div class="sb-nav-link-icon"><i class="fa-solid fa-gear"></i></div>
+                    Site configs
+                </a>
                 {{-- Theme examples --}}
                     {{-- <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
                         <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>

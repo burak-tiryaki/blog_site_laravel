@@ -15,6 +15,9 @@ class HomepageController extends Controller
 {
     public function __construct()
     {
+        if(config('app.custom_site_active') == "0")
+            abort(403,'Site currently OFFLINE!');
+        
         //--- view'lerde GLOBAL DEĞİŞKEN TANIMLAMA
         // Menu Pages
         view()->share('pages',Page::where('page_status',1)->orderBy('page_order','ASC')->get());

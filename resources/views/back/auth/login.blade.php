@@ -15,11 +15,12 @@
             <div id="layoutAuthentication_content">
                 <main>
                     <div class="container">
-                        <div class="row justify-content-center">
+                        <div class="row justify-content-center mt-5">
                             <div class="col-lg-5">
                                 <div class="card shadow-lg border-0 rounded-lg mt-5">
                                     <div class="card-header">
-                                        <h3 class="text-center font-weight-light my-2">Login</h3></div>
+                                        <h3 class="text-center font-weight-light my-2">Login</h3>
+                                    </div>
                                     <div class="card-body">
 
                                         <form method="post" action="{{route('admin.login')}}">
@@ -40,7 +41,7 @@
                                             </div>
                                             
                                             @if(session('status'))
-                                             <div class="alert alert-danger mt-4">
+                                             <div class="alert alert-danger mt-4 text-center">
                                                  {{ session('status') }}
                                              </div>
                                             @endif
@@ -48,9 +49,9 @@
                                         </form>
 
                                     </div>
-                                    <div class="card-footer text-center py-3">
+                                    {{-- <div class="card-footer text-center py-3">
                                         <div class="small"><a href="register.html">Need an account? Sign up!</a></div>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                         </div>
@@ -60,13 +61,13 @@
             <div id="layoutAuthentication_footer">
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
-                        <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; Your Website 2023</div>
-                            <div>
+                        <div class="d-flex align-items-center justify-content-center small">
+                            <div class="text-muted">Copyright &copy; {{$config->siteTitle}} {{date("Y")}}</div>
+                            {{-- <div>
                                 <a href="#">Privacy Policy</a>
                                 &middot;
                                 <a href="#">Terms &amp; Conditions</a>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </footer>
