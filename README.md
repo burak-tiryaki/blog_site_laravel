@@ -1,6 +1,10 @@
 # Blog Site
 
 A simple blog website with an admin panel, built using Laravel 10.
+Includes Roles and Permissions.
+
+It's live right now! You can check it out 
+<a href="https://blog.buraktiryaki.me" target="_blank">here</a>.
 
 ## How to set
 

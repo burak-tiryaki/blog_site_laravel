@@ -23,6 +23,25 @@
 
                 <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{route('contact')}}">Contact</a></li>
             </ul>
+            @if (!Auth::check())
+                <a href="{{route('admin.login')}}" class="btn btn-outline-light rounded p-2 ms-1">Login</a>
+
+            @else
+            <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4 border rounded">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-user fa-fw me-1"></i>
+                        <span class="text-light">{{Auth::user()->user_name}}</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="{{route('admin.articles.myArticles')}}">My articles</a></li>
+                        <li><a class="dropdown-item" href="{{route('admin.articles.create')}}">Create Article</a></li>
+                        <li><hr class="dropdown-divider" /></li> 
+                        <li><a class="dropdown-item" href="{{route('logout')}}">Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+            @endif
         </div>
     </div>
 </nav>

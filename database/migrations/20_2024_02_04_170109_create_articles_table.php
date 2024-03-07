@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('articles', function (Blueprint $table) {
             $table->id('article_id');
             $table->unsignedBigInteger('category_id');//ilişki kurulacak tabloların unsigned olması gerekir. eksi değer almaması için.
+            $table->unsignedBigInteger('user_id');
             $table->string('article_title');
             $table->text('article_content');
             $table->string('article_slug');
@@ -27,6 +28,10 @@ return new class extends Migration
                 ->references('category_id')
                 ->on('categories');
                 //->onDelete('cascade');//Eğer bir category silinirse, o category'e sahip yazılar da silinir.
+
+            $table->foreign('user_id')
+            ->references('user_id')
+            ->on('users');
         });
     }
 

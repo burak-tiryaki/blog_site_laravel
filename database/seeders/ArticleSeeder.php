@@ -38,6 +38,7 @@ class ArticleSeeder extends Seeder
         $datas = [
             [
                 'category_id' =>2,
+                'user_id' => 1,
                 'article_title'=>'Merhaba Dünya',
                 'article_content' => $lorem,
                 'article_slug' => $this->slugify('Merhaba Dünya'),
@@ -47,6 +48,7 @@ class ArticleSeeder extends Seeder
             ],
             [
                 'category_id' =>4,
+                'user_id' => 2,
                 'article_title'=>'Ford Yeni Araba',
                 'article_content' => $lorem,
                 'article_slug' => $this->slugify('Ford Yeni Araba'),
@@ -56,6 +58,7 @@ class ArticleSeeder extends Seeder
             ],
             [
                 'category_id' =>6,
+                'user_id' => 3,
                 'article_title'=>'Yoga Nasıl Yapılır?',
                 'article_content' => $lorem,
                 'article_slug' => $this->slugify('Yoga Nasıl Yapılır?'),

@@ -14,6 +14,7 @@ class Article extends Model
     
     protected $fillable=[
         'category_id',
+        'user_id',
         'article_title',
         'article_content',
         'article_slug',
@@ -22,6 +23,9 @@ class Article extends Model
         'article_image'
     ];
 
+    protected $table = 'articles';
+    protected $primaryKey = 'article_id';
+
     public function getCategory()
     {
         return $this->hasOne('App\Models\Category','category_id','category_id');
@@ -29,6 +33,6 @@ class Article extends Model
     
     public function getUser()
     {
-            
+        return $this->hasOne('App\Models\User','user_id','user_id');
     }
 }

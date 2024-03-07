@@ -1,5 +1,5 @@
 @extends('back.layouts.layout')
-@section('title','Trashed Articles')
+@section('title','My Articles')
 @section('content')
 
 @if(session('status'))
@@ -19,10 +19,9 @@
             Articles (<strong>{{$articles->count()}}</strong>)
         </span>
         <span class="ms-auto">
-            <a href="{{ $isOnlyUser ? route('admin.articles.myArticles') : route('admin.articles.index') }}" 
-                class="btn btn-outline-primary">
-                <i class="fa fa-eye"></i>
-                {{ $isOnlyUser ? 'My Articles' : 'All Articles' }}
+            <a href="{{route('admin.articles.getTrashedArticles')}}" class="btn btn-outline-secondary">
+                <i class="fa fa-trash"></i>
+                Trashed Articles
             </a>
         </span>
     </div>
@@ -35,8 +34,8 @@
                     <th>Content</th>
                     <th>Category</th>
                     <th>Hit</th>
-                    <th>User</th>
                     <th>Create Date</th>
+                    <th>User</th>
                     <th>Status</th>
                     <th>Options</th>
                 </tr>
@@ -48,8 +47,8 @@
                     <th>Content</th>
                     <th>Category</th>
                     <th>Hit</th>
-                    <th>User</th>
                     <th>Create Date</th>
+                    <th>User</th>
                     <th>Status</th>
                     <th>Options</th>
                 </tr>
@@ -64,17 +63,20 @@
                     <td>{{ Str::words($article->article_content, 10) }}</td>
                     <td>{{$article->getCategory->category_name}}</td>
                     <td>{{$article->article_hit}}</td>
-                    <td>{{$article->getUser->user_name}}</td>
                     <td>{{$article->created_at}}</td>
+                    <td>{{$article->getUser->user_name}}</td>
                     <td>
                         <a href="{{route('admin.articles.changeStatus',$article->article_id)}}" 
-                            class="disabled btn btn-sm {!!$article->article_status == 1 ? 'btn-success">Active' : 'btn-danger">Passive'!!}
+                            class="disabled btn btn-sm {!!$article->article_status == 1 ? 'btn-success' : 'btn-danger'!!}">
+                            {!!$article->article_status == 1 ? 'Active' : 'Passive'!!}
+                            
                         </a>
 
                     </td>
                     <td>
-                        <a href="{{route('admin.articles.recoverArticle',$article->article_id)}}" title="Recycle" class="btn btn-sm btn-primary"><i class="fa fa-recycle px-1"></i></a>
-                        <a href="{{route('admin.articles.hardDeleteArticle',$article->article_id)}}" title="HARD Delete" class="btn btn-sm btn-danger"><i class="fa fa-times px-1"></i></a>
+                        <a href="{{route('get.article',[$article->getCategory->category_name,$article->article_slug])}}" target="_blank" title="Show" class="btn btn-sm btn-success"><i class="fa fa-eye px-1"></i></a>
+                        <a href="{{route('admin.articles.edit',$article->article_id)}}" title="Edit" class="btn btn-sm btn-primary"><i class="fa fa-pen px-1"></i></a>
+                        <a href="{{route('admin.articles.trashArticle',$article->article_id)}}" title="Delete" class="btn btn-sm btn-danger"><i class="fa fa-trash px-1"></i></a>
                     </td>
                 </tr>
                 @endforeach

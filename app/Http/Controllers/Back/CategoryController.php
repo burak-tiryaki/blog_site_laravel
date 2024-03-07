@@ -124,7 +124,7 @@ class CategoryController extends Controller
 
         $category = Category::where('category_id','!=',1)
                     ->where('category_id',$request->deleteId)
-                    ->delete() ?? abort(403,'Error during kategory deletion!');
+                    ->delete() ?? abort(403,'Error during category deletion!');
 
         toastr('Category Successfly DELETED!','success','Success!');
         return redirect()->back();

@@ -6,13 +6,35 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Article;
 use App\Models\Category;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\View;
 
 class ArticleController extends Controller
 {
+    public $isOnlyUser = false;
+
+    public function __construct()
+    {
+        // Auth::user() -> burada çalışmıyor.
+
+        $this->middleware(function($request, $next){
+            $userRoles = Auth::user()->roles->pluck('name')->toArray();
+
+            if(count($userRoles) == 1 && in_array('User',$userRoles))
+                $this->isOnlyUser = true;
+            else
+                $this->isOnlyUser = false;
+            
+            return $next($request);
+        });
+
+        //$this->middleware('permission:get-all-articles', ['only' => ['index']]);
+    }
     /**
      * Display a listing of the resource.
      */
@@ -48,6 +70,7 @@ class ArticleController extends Controller
             'article_content' => $request->content,
             'article_slug' => Str::slug($request->title),
             'article_status' => $request->status == true ? 1 : 0,
+            'user_id' => Auth::user()->user_id,
         ];
         if($request->hasFile('image')){
             $image = $request->file('image');
@@ -64,6 +87,9 @@ class ArticleController extends Controller
         {
             toastr('Article successfuly created.','success','Success!');
             
+            if($this->isOnlyUser)
+                return redirect(route('admin.articles.myArticles'));    
+
             return redirect(route('admin.articles.index'));
         }
             
@@ -129,6 +155,9 @@ class ArticleController extends Controller
         {
             toastr('Article successfuly updated.','success','Success!');
             
+            if($this->isOnlyUser)
+                return redirect(route('admin.articles.myArticles')); 
+            
             return redirect(route('admin.articles.index'));
         }
             
@@ -151,6 +180,19 @@ class ArticleController extends Controller
 
     public function trashArticle($id)
     {
+        if($this->isOnlyUser){
+            $result = Article::where('user_id',Auth::user()->user_id)
+                    ->where('article_id',$id)
+                    ->delete();
+
+            if($result == 1)
+                toastr('Article successfuly TRASHED.','success','Success!');
+            else
+                toastr('You can only delete posts that belong to you!','error','Error!');
+
+            return redirect(route('admin.articles.myArticles'));
+        }
+        
         Article::where('article_id',$id)->delete();
         
         toastr('Article successfuly TRASHED.','success','Success!');
@@ -159,9 +201,16 @@ class ArticleController extends Controller
     }
     
     public function getTrashedArticles()
-    {
-        $articles = Article::onlyTrashed()->orderBy('deleted_at','DESC')->get();
-        return view('back.articles.trashed',compact('articles'));
+    {    
+        if($this->isOnlyUser)
+            $articles = Article::onlyTrashed()
+                                ->where('user_id',Auth::user()->user_id)
+                                ->orderBy('deleted_at','DESC')
+                                ->get();    
+        else
+            $articles = Article::onlyTrashed()->orderBy('deleted_at','DESC')->get();
+
+        return view('back.articles.trashed',compact('articles'))->with('isOnlyUser',$this->isOnlyUser);
     }
 
     public function recoverArticle($id)
@@ -186,9 +235,17 @@ class ArticleController extends Controller
         $article->where('article_id',$id)->forceDelete();
         toastr('Article successfuly DELETED.','success','Success!');
 
-        return redirect(route('admin.articles.index'));
+        return redirect(route('admin.articles.getTrashedArticles'));
     }
     
+    public function myArticles()
+    {
+        $articles = Article::where('user_id',Auth::user()->user_id)
+                    ->orderBy('created_at','DESC')
+                    ->get();
+        return view('back.articles.myArticles',compact('articles'));
+    }
+
     /**
      * Remove the specified resource from storage.
      * This method can be use with forms.
@@ -197,4 +254,5 @@ class ArticleController extends Controller
     {
         //
     }
+
 }

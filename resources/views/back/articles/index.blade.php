@@ -35,6 +35,7 @@
                     <th>Category</th>
                     <th>Hit</th>
                     <th>Create Date</th>
+                    <th>User</th>
                     <th>Status</th>
                     <th>Options</th>
                 </tr>
@@ -47,6 +48,7 @@
                     <th>Category</th>
                     <th>Hit</th>
                     <th>Create Date</th>
+                    <th>User</th>
                     <th>Status</th>
                     <th>Options</th>
                 </tr>
@@ -62,6 +64,7 @@
                     <td>{{$article->getCategory->category_name}}</td>
                     <td>{{$article->article_hit}}</td>
                     <td>{{$article->created_at}}</td>
+                    <td>{{$article->getUser->user_name}}</td>
                     <td>
                         <a href="{{route('admin.articles.changeStatus',$article->article_id)}}" 
                             class="btn btn-sm {!!$article->article_status == 1 ? 'btn-success' : 'btn-danger'!!}">

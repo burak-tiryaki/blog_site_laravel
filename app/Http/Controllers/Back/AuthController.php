@@ -4,7 +4,6 @@ namespace App\Http\Controllers\back;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Admin;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
@@ -22,8 +21,8 @@ class AuthController extends Controller
             'password' => 'required'
         ]);
 
-        if (Auth::attempt(['admin_email' => $request->email, 'password' => $request->password])) {
-            toastr('Welcome back '. Str::upper(Auth::user()->admin_name,'info'));
+        if (Auth::attempt(['user_email' => $request->email, 'password' => $request->password])) {
+            toastr('Welcome back '. Str::upper(Auth::user()->user_name,'info'));
             return redirect()->route('admin.dashboard');
         }
         else
